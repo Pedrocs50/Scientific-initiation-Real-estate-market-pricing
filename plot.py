@@ -46,15 +46,15 @@ def main():
             print("Digite um valor válido entre 1 e 10.")  
 
     
-    arquivo = "Preço-venda-aluguel.xlsx"  # Substitua pelo seu nome correto
+    arquivo = "Preço-venda-aluguel.xlsx"
 
     # Carregar os dados e exibir as primeiras linhas
     df = pd.read_excel(arquivo, thousands=',', decimal='.')
-    print(df.head())  # Verifica se a coluna "data" existe e está correta
+    print(df.head())  
 
     # Criar o gráfico de barras
     plt.figure(figsize=(12, 6))  # Define o tamanho do gráfico
-    plt.bar(df["Data"], df[coluna_avaliar], color="blue")  # Ajuste "valor" para a coluna correta
+    plt.bar(df["Data"], df[coluna_avaliar], color="blue")  # o primeiro é o eixo 'X' e o segundo é o eixo 'Y'
 
     # Configurar rótulos e título
     plt.xlabel("Data")
