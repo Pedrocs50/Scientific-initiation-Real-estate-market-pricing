@@ -1,7 +1,5 @@
 import pandas as pd
 import matplotlib.pyplot as plt
-import matplotlib.ticker as ticker
-
 
 def main():
     print("GRÁFICO DE PREÇOS DE VENDAS E ALUGUEIS POR METRO QUADRADO(R$/m²)")
