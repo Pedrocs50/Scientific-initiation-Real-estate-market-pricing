@@ -54,11 +54,11 @@ def main():
     arquivo = "Preço-venda-aluguel.xlsx"  
     df = pd.read_excel(arquivo, thousands=',', decimal='.')
 
-    # Garantir que as colunas selecionadas são numéricas
+    # garantindo que as colunas selecionadas são numéricas
     df[aluguel_coluna] = pd.to_numeric(df[aluguel_coluna], errors='coerce')
     df[venda_coluna] = pd.to_numeric(df[venda_coluna], errors='coerce')
 
-    # Calcular o Yield
+    # calculando o Yield
     df['yield'] = df[aluguel_coluna] / df[venda_coluna]
 
     # Exibir os dados
@@ -66,13 +66,15 @@ def main():
     print(f"Coluna de aluguel escolhida: {aluguel_coluna}")
     print(f"Primeiras linhas dos dados calculados de yield:\n{df[['Data', venda_coluna, aluguel_coluna, 'yield']].head()}")
 
-    # Plotar o gráfico
+    # plotando o gráfico
     plt.figure(figsize=(12, 6))
     plt.bar(df["Data"], df['yield'], color="green")
     plt.xlabel("Data")
     plt.ylabel("Yield (Aluguel / Venda)")
     plt.title(f"Gráfico de Yield entre {aluguel_coluna} e {venda_coluna}")
     plt.xticks(rotation=45)
+
+    # exibi o gráfico
     plt.show()
 
 main()

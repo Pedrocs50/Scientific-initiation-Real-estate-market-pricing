@@ -48,23 +48,23 @@ def main():
     
     arquivo = "Preço-venda-aluguel.xlsx"
 
-    # Carregar os dados e exibir as primeiras linhas
+    # carregando os dados para depois exibilos e, substituindo as vírgulas por pontos, para evitar erros
     df = pd.read_excel(arquivo, thousands=',', decimal='.')
     print(df.head())  
 
-    # Criar o gráfico de barras
+    # criando o gráfico de barras
     plt.figure(figsize=(12, 6))  # Define o tamanho do gráfico
     plt.bar(df["Data"], df[coluna_avaliar], color="blue")  # o primeiro é o eixo 'X' e o segundo é o eixo 'Y'
 
-    # Configurar rótulos e título
+    # configurando os rótulos e título
     plt.xlabel("Data")
     plt.ylabel(f'{coluna_avaliar} por m²')
     plt.title("Gráfico de Barras")
 
-    # Rotacionar os rótulos do eixo X para melhor visualização
+    # rotariona os rótulos do eixo X para melhor visualização
     plt.xticks(rotation=45)
 
-    # Exibir o gráfico
+    # exibi o gráfico
     plt.show()
 
 main()
