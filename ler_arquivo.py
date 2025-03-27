@@ -6,6 +6,6 @@ class Leitor_Excel:
         self._df = None
 
     def ler_aquivo(self):
-        self._df = pd.read_excel(self._arquivo, thousands=',', decimal='.')
+        self._df = pd.read_excel(self._arquivo, decimal=',', thousands='.')
         print(self._df.head())  # Para conferir se os dados foram carregados
         return self._df
