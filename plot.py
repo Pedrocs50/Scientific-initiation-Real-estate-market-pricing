@@ -1,14 +1,9 @@
-import pandas as pd
 import matplotlib.pyplot as plt
+from ler_arquivo import Leitor_Excel
 
 class AnaliseDados:
-    def __init__(self, arquivo):
-        self._arquivo = arquivo
-        self._df = None
-
-    def ler_arquivo(self):
-        self._df = pd.read_excel(self._arquivo, thousands=',', decimal='.')
-        print(self._df.head())  # Para conferir se os dados foram carregados
+    def __init__(self, df):
+        self._df = df
 
     def criando_grafico(self, coluna_avaliar):
         if self._df is None:
@@ -30,54 +25,43 @@ class AnaliseDados:
         plt.show()
 
 def main():
-
     # LER O ARQUIVO ANTES
-    analise = AnaliseDados("Preço-venda-aluguel.xlsx")
-    analise.ler_arquivo()
+    leitor = Leitor_Excel("Preço-venda-aluguel.xlsx")
+    df = leitor.ler_aquivo()  # DataFrame lido
 
-    print("GRÁFICO DE PREÇOS DE VENDAS E ALUGUEIS POR METRO QUADRADO(R$/m²)")
-    print("POSSÍVES COLUNAS A SEREM AVALIADAS")
-    print("1. Venda geral")
-    print("2. Venda com 1 dormitório")
-    print("3. Venda com 2 dormitórios")
-    print("4. Venda com 3 dormitórios")
-    print("5. Venda com 4 dormitórios")
-    print("6. Aluguel geral")
-    print("7. Aluguel com 1 dormitório")
-    print("8. Aluguel com 2 dormitório")
-    print("9. Aluguel com 3 dormitório")
-    print("10. Aluguel com 4 dormitório\n")
+    print("\nGRÁFICO DE PREÇOS DE VENDAS E ALUGUEIS POR METRO QUADRADO (R$/m²)")
+    print("POSSÍVEIS COLUNAS A SEREM AVALIADAS:")
+    opcoes_colunas = {
+        1: 'venda',
+        2: 'venda_1D',
+        3: 'venda_2D',
+        4: 'venda_3D',
+        5: 'venda_4D',
+        6: 'aluguel',
+        7: 'aluguel_1D',
+        8: 'aluguel_2D',
+        9: 'aluguel_3D',
+        10: 'aluguel_4D'
+    }
+
+    for k, v in opcoes_colunas.items():
+        print(f"{k}. {v}")
 
     while True:
-        coluna_avaliar = int(input("Qual coluna gostaria de visualizar? (1-10): "))
+        try:
+            escolha = int(input("\nQual coluna gostaria de visualizar? (1-10): "))
+            if escolha in opcoes_colunas:
+                coluna_avaliar = opcoes_colunas[escolha]
+                break
+            else:
+                print("Digite um número entre 1 e 10.")
+        except ValueError:
+            print("Por favor, insira um número válido.")
 
-        if 1 <= coluna_avaliar <= 10:
-            if coluna_avaliar == 1:
-                coluna_avaliar = 'venda'
-            elif coluna_avaliar == 2:
-                coluna_avaliar = 'venda_1D'
-            elif coluna_avaliar == 3:
-                coluna_avaliar = 'venda_2D'
-            elif coluna_avaliar == 4:
-                coluna_avaliar = 'venda_3D'
-            elif coluna_avaliar == 5:
-                coluna_avaliar = 'venda_4D'
-            elif coluna_avaliar == 6:
-                coluna_avaliar = 'aluguel'
-            elif coluna_avaliar == 7:
-                coluna_avaliar = 'aluguel_1D'
-            elif coluna_avaliar == 8:
-                coluna_avaliar = 'aluguel_2D'
-            elif coluna_avaliar == 9:
-                coluna_avaliar = 'aluguel_3D'
-            elif coluna_avaliar == 10:
-                coluna_avaliar = 'aluguel_4D'
-            
-            print(f"Você escolheu a coluna: {coluna_avaliar}")
-            break  
-        else:
-            print("Digite um valor válido entre 1 e 10.")  
+    print(f"Você escolheu a coluna: {coluna_avaliar}")
 
+    # Criando a análise de dados com o DataFrame lido
+    analise = AnaliseDados(df)
     analise.criando_grafico(coluna_avaliar)
 
 main()

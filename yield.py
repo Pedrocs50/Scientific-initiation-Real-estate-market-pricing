@@ -1,5 +1,10 @@
 import pandas as pd
 import matplotlib.pyplot as plt
+from ler_arquivo import Ler_aquivo
+
+class Yield:
+    def __init__(self, ar):
+        pass
 
 def main():
     print("CÁLCULO DO YIELD (RELAÇÃO ENTRE ALUGUEL E VENDA)")
