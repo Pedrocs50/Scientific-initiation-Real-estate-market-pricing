@@ -1,7 +1,40 @@
 import pandas as pd
 import matplotlib.pyplot as plt
 
+class AnaliseDados:
+    def __init__(self, arquivo):
+        self._arquivo = arquivo
+        self._df = None
+
+    def ler_arquivo(self):
+        self._df = pd.read_excel(self._arquivo, thousands=',', decimal='.')
+        print(self._df.head())  # Para conferir se os dados foram carregados
+
+    def criando_grafico(self, coluna_avaliar):
+        if self._df is None:
+            print("Erro: Necessário que um arquivo seja lido, para criar o gráfico.")
+            return
+
+        plt.figure(figsize=(12, 6))  # Define o tamanho do gráfico
+        plt.bar(self._df["Data"], self._df[coluna_avaliar], color="blue")  # o primeiro é o eixo 'X' e o segundo é o eixo 'Y'
+
+        # configurando os rótulos e título
+        plt.xlabel("Data")
+        plt.ylabel(f'{coluna_avaliar} por m²')
+        plt.title("Gráfico de Barras")
+
+        # rotariona os rótulos do eixo X para melhor visualização
+        plt.xticks(rotation=45)
+
+        # exibi o gráfico
+        plt.show()
+
 def main():
+
+    # LER O ARQUIVO ANTES
+    analise = AnaliseDados("Preço-venda-aluguel.xlsx")
+    analise.ler_arquivo()
+
     print("GRÁFICO DE PREÇOS DE VENDAS E ALUGUEIS POR METRO QUADRADO(R$/m²)")
     print("POSSÍVES COLUNAS A SEREM AVALIADAS")
     print("1. Venda geral")
@@ -45,26 +78,6 @@ def main():
         else:
             print("Digite um valor válido entre 1 e 10.")  
 
-    
-    arquivo = "Preço-venda-aluguel.xlsx"
-
-    # carregando os dados para depois exibilos e, substituindo as vírgulas por pontos, para evitar erros
-    df = pd.read_excel(arquivo, thousands=',', decimal='.')
-    print(df.head())  
-
-    # criando o gráfico de barras
-    plt.figure(figsize=(12, 6))  # Define o tamanho do gráfico
-    plt.bar(df["Data"], df[coluna_avaliar], color="blue")  # o primeiro é o eixo 'X' e o segundo é o eixo 'Y'
-
-    # configurando os rótulos e título
-    plt.xlabel("Data")
-    plt.ylabel(f'{coluna_avaliar} por m²')
-    plt.title("Gráfico de Barras")
-
-    # rotariona os rótulos do eixo X para melhor visualização
-    plt.xticks(rotation=45)
-
-    # exibi o gráfico
-    plt.show()
+    analise.criando_grafico(coluna_avaliar)
 
 main()
