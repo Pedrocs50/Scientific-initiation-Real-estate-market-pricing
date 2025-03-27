@@ -1,3 +1,7 @@
+'''
+Visualização da variação do preço do m² ao longo do tempo
+'''
+
 import matplotlib.pyplot as plt
 from ler_arquivo import Leitor_Excel
 
@@ -65,3 +69,4 @@ def main():
     analise.criando_grafico(coluna_avaliar)
 
 main()
+
