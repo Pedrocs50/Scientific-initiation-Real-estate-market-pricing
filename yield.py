@@ -1,85 +1,119 @@
 import pandas as pd
 import matplotlib.pyplot as plt
-from ler_arquivo import Ler_aquivo
+from ler_arquivo import Leitor_Excel
 
 class Yield:
-    def __init__(self, ar):
-        pass
+    def __init__(self, df, aluguel_coluna, venda_coluna):
+        self._df = df
+        self.aluguel_coluna = aluguel_coluna
+        self.venda_coluna = venda_coluna
+
+    def calcular_yield(self):
+        if self._df is None or self._df.empty:
+            print("Erro: Necessário que um arquivo seja lido para criar o gráfico.")
+            return
+
+        # garante que as colunas sejam numéricas
+        self._df[self.aluguel_coluna] = pd.to_numeric(self._df[self.aluguel_coluna], errors='coerce')
+        self._df[self.venda_coluna] = pd.to_numeric(self._df[self.venda_coluna], errors='coerce')
+
+        # calculando o aluguel anual
+        self._df['aluguel_anual'] = self._df[self.aluguel_coluna] * 12
+
+        # calculando o Yield
+        self._df['yield'] = (self._df['aluguel_anual'] / self._df[self.venda_coluna]) * 100
+
+        # exibe os dados
+        print(f"Coluna de venda escolhida: {self.venda_coluna}")
+        print(f"Coluna de aluguel escolhida: {self.aluguel_coluna}")
+        print(f"Primeiras linhas dos dados calculados de yield:\n{self._df[['Data', self.venda_coluna, self.aluguel_coluna, 'yield']].head()}")
+
+        # Plotando o gráfico
+        plt.figure(figsize=(12, 6))
+        plt.bar(self._df["Data"], self._df['yield'], color="green")
+        plt.xlabel("Data")
+        plt.ylabel("Yield (Aluguel / Venda)")
+        plt.title(f"Gráfico de Yield entre {self.aluguel_coluna} e {self.venda_coluna}")
+        plt.xticks(rotation=45)
+
+        # exibe o gráfico
+        plt.show()
 
 def main():
-    print("CÁLCULO DO YIELD (RELAÇÃO ENTRE ALUGUEL E VENDA)")
-    print("POSSÍVEIS COLUNAS DE VENDA")
-    print("1. Venda geral")
-    print("2. Venda com 1 dormitório")
-    print("3. Venda com 2 dormitórios")
-    print("4. Venda com 3 dormitórios")
-    print("5. Venda com 4 dormitórios\n")
+    # LER O ARQUIVO ANTES
+    leitor = Leitor_Excel("Preço-venda-aluguel.xlsx")
+    df = leitor.ler_aquivo()  # DataFrame lido
 
-    print("POSSÍVEIS COLUNAS DE ALUGUEL")
-    print("6. Aluguel geral")
-    print("7. Aluguel com 1 dormitório")
-    print("8. Aluguel com 2 dormitórios")
-    print("9. Aluguel com 3 dormitório")
-    print("10. Aluguel com 4 dormitório\n")
+    if df is None or df.empty:
+        print("Erro: O arquivo não pôde ser carregado. Verifique o caminho e tente novamente.")
+        return
 
+    print("\nGRÁFICO DE PREÇOS DE VENDAS E ALUGUEIS POR METRO QUADRADO (R$/m²)")
+
+    # escolha da coluna de venda
     while True:
-        venda_coluna = int(input("Escolha a coluna de venda (1-5): "))
-        if 1 <= venda_coluna <= 5:
-            if venda_coluna == 1:
-                venda_coluna = 'venda'
-            elif venda_coluna == 2:
-                venda_coluna = 'venda_1D'
-            elif venda_coluna == 3:
-                venda_coluna = 'venda_2D'
-            elif venda_coluna == 4:
-                venda_coluna = 'venda_3D'
-            elif venda_coluna == 5:
-                venda_coluna = 'venda_4D'
-            break
-        else:
-            print("Escolha uma coluna de venda válida.")
+        print("\nEscolha a coluna de venda (1-5):")
+        print("1. venda")
+        print("2. venda_1D")
+        print("3. venda_2D")
+        print("4. venda_3D")
+        print("5. venda_4D")
+        try:
+            venda_coluna = int(input("\nEscolha a coluna de venda (1-5): "))
+            if 1 <= venda_coluna <= 5:
+                if venda_coluna == 1:
+                    venda_coluna = 'venda'
+                elif venda_coluna == 2:
+                    venda_coluna = 'venda_1D'
+                elif venda_coluna == 3:
+                    venda_coluna = 'venda_2D'
+                elif venda_coluna == 4:
+                    venda_coluna = 'venda_3D'
+                elif venda_coluna == 5:
+                    venda_coluna = 'venda_4D'
+                break
+            else:
+                print("Escolha uma coluna de venda válida.")
+        except ValueError:
+            print("Por favor, insira um número válido.")
 
+    # escolha da coluna de aluguel
     while True:
-        aluguel_coluna = int(input("Escolha a coluna de aluguel (6-10): "))
-        if 6 <= aluguel_coluna <= 10:
-            if aluguel_coluna == 6:
-                aluguel_coluna = 'aluguel'
-            elif aluguel_coluna == 7:
-                aluguel_coluna = 'aluguel_1D'
-            elif aluguel_coluna == 8:
-                aluguel_coluna = 'aluguel_2D'
-            elif aluguel_coluna == 9:
-                aluguel_coluna = 'aluguel_3D'
-            elif aluguel_coluna == 10:
-                aluguel_coluna = 'aluguel_4D'
-            break
-        else:
-            print("Escolha uma coluna de aluguel válida.")
+        print("\nEscolha a coluna de aluguel (6-10):")
+        print("6. aluguel")
+        print("7. aluguel_1D")
+        print("8. aluguel_2D")
+        print("9. aluguel_3D")
+        print("10. aluguel_4D")
+        try:
+            aluguel_coluna = int(input("\nEscolha a coluna de aluguel (6-10): "))
+            if 6 <= aluguel_coluna <= 10:
+                if aluguel_coluna == 6:
+                    aluguel_coluna = 'aluguel'
+                elif aluguel_coluna == 7:
+                    aluguel_coluna = 'aluguel_1D'
+                elif aluguel_coluna == 8:
+                    aluguel_coluna = 'aluguel_2D'
+                elif aluguel_coluna == 9:
+                    aluguel_coluna = 'aluguel_3D'
+                elif aluguel_coluna == 10:
+                    aluguel_coluna = 'aluguel_4D'
+                break
+            else:
+                print("Escolha uma coluna de aluguel válida.")
+        except ValueError:
+            print("Por favor, insira um número válido.")
 
-    arquivo = "Preço-venda-aluguel.xlsx"  
-    df = pd.read_excel(arquivo, thousands=',', decimal='.')
-
-    # garantindo que as colunas selecionadas são numéricas
-    df[aluguel_coluna] = pd.to_numeric(df[aluguel_coluna], errors='coerce')
-    df[venda_coluna] = pd.to_numeric(df[venda_coluna], errors='coerce')
-
-    # calculando o Yield
-    df['yield'] = df[aluguel_coluna] / df[venda_coluna]
-
-    # Exibir os dados
-    print(f"Coluna de venda escolhida: {venda_coluna}")
-    print(f"Coluna de aluguel escolhida: {aluguel_coluna}")
-    print(f"Primeiras linhas dos dados calculados de yield:\n{df[['Data', venda_coluna, aluguel_coluna, 'yield']].head()}")
-
-    # plotando o gráfico
-    plt.figure(figsize=(12, 6))
-    plt.bar(df["Data"], df['yield'], color="green")
-    plt.xlabel("Data")
-    plt.ylabel("Yield (Aluguel / Venda)")
-    plt.title(f"Gráfico de Yield entre {aluguel_coluna} e {venda_coluna}")
-    plt.xticks(rotation=45)
-
-    # exibi o gráfico
-    plt.show()
+    # calcular e mostrar o gráfico de Yield
+    analise = Yield(df, aluguel_coluna, venda_coluna)
+    analise.calcular_yield()
 
 main()
+
+
+'''
+
+Yield(%) = (Aluguel anual/Preço da Venda) x 100
+O yield vai indicar a rentabilidade do aluguel em relação ao preço de venda. Quanto maior o valor de yield, mais vantajoso é o aluguel em relação ao preço de venda do imóvel.
+
+'''
