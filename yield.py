@@ -26,7 +26,9 @@ class Yield:
         # exibe os dados
         print(f"Coluna de venda escolhida: {self.venda_coluna}")
         print(f"Coluna de aluguel escolhida: {self.aluguel_coluna}")
-        print(f"Primeiras linhas dos dados calculados de yield:\n{self._df[['Data', self.venda_coluna, self.aluguel_coluna, 'yield']].head()}")
+        pd.set_option('display.max_rows', None)
+        print(f"Todas as linhas dos dados calculados de yield:\n{self._df[['Data', self.venda_coluna, self.aluguel_coluna, 'yield']].round(2)}")
+
 
         # Plotando o gráfico
         plt.figure(figsize=(12, 6))
@@ -112,8 +114,11 @@ main()
 
 
 '''
-
+Cálculo:
 Yield(%) = (Aluguel anual/Preço da Venda) x 100
+
+No contexto de aluguel e venda, o yield é uma métrica que relaciona o retorno de um investimento (no caso, o aluguel) com o valor de mercado do bem (no caso, o preço de venda). Ele é uma medida importante para investidores que querem saber qual o retorno que estão obtendo com o aluguel em relação ao valor de venda do imóvel.
+
 O yield vai indicar a rentabilidade do aluguel em relação ao preço de venda. Quanto maior o valor de yield, mais vantajoso é o aluguel em relação ao preço de venda do imóvel.
 
 '''
