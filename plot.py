@@ -15,7 +15,7 @@ class AnaliseDados:
             return
 
         plt.figure(figsize=(12, 6))  # Define o tamanho do gráfico
-        plt.bar(self._df["Data"], self._df[coluna_avaliar], color="blue")  # o primeiro é o eixo 'X' e o segundo é o eixo 'Y'
+        plt.plot(self._df["Data"], self._df[coluna_avaliar], color="blue")  # o primeiro é o eixo 'X' e o segundo é o eixo 'Y'
 
         # configurando os rótulos e título
         plt.xlabel("Data")

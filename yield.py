@@ -32,7 +32,7 @@ class Yield:
 
         # Plotando o gráfico
         plt.figure(figsize=(12, 6))
-        plt.bar(self._df["Data"], self._df['yield'], color="green")
+        plt.plot(self._df["Data"], self._df['yield'], color="green")
         plt.xlabel("Data")
         plt.ylabel("Yield (Aluguel / Venda)")
         plt.title(f"Gráfico de Yield entre {self.aluguel_coluna} e {self.venda_coluna}")
