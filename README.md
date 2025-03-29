@@ -2,8 +2,10 @@
 Scientific initiation on real estate market pricing, aiming to analyze and predict market values.
 
 Sites: 
-readcsv
 ipeadata
+
+Learn about:
+readcsv
 googlecolab
 
 ---
