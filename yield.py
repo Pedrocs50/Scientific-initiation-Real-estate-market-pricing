@@ -1,6 +1,8 @@
 import pandas as pd
 import matplotlib.pyplot as plt
 from ler_arquivo import Leitor_Excel
+import numpy as np
+import mplcursors
 
 class Yield:
     def __init__(self, df, aluguel_coluna, venda_coluna):
@@ -36,7 +38,10 @@ class Yield:
         plt.xlabel("Data")
         plt.ylabel("Yield (Aluguel / Venda)")
         plt.title(f"Gráfico de Yield entre {self.aluguel_coluna} e {self.venda_coluna}")
-        plt.xticks(rotation=45)
+        plt.xticks(np.arange(0, len(self._df), step=5), rotation=50, fontsize=10)
+
+        mplcursors.cursor(hover=True)
+
 
         # exibe o gráfico
         plt.show()

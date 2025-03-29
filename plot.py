@@ -4,6 +4,8 @@ Visualização da variação do preço do m² ao longo do tempo
 
 import matplotlib.pyplot as plt
 from ler_arquivo import Leitor_Excel
+import numpy as np
+import mplcursors
 
 class AnaliseDados:
     def __init__(self, df):
@@ -23,7 +25,10 @@ class AnaliseDados:
         plt.title("Gráfico de Barras")
 
         # rotariona os rótulos do eixo X para melhor visualização
-        plt.xticks(rotation=45)
+        plt.xticks(np.arange(0, len(self._df), step=5), rotation=50, fontsize=10)
+
+        # interatividade com o mouse no grafico
+        mplcursors.cursor(hover=True)
 
         # exibi o gráfico
         plt.show()
