@@ -49,7 +49,7 @@ class Yield:
 def main():
     # LER O ARQUIVO ANTES
     leitor = Leitor_Excel("Preço-venda-aluguel.xlsx")
-    df = leitor.ler_aquivo()  # DataFrame lido
+    df = leitor.ler_aquivo_vendas_aluguel()  # DataFrame lido
 
     if df is None or df.empty:
         print("Erro: O arquivo não pôde ser carregado. Verifique o caminho e tente novamente.")

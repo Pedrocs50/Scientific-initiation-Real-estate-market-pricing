@@ -1,5 +1,5 @@
 '''
-Visualização da variação do preço do m² ao longo do tempo
+TAXAS IPCA DE 2008 ATÉ 2025
 '''
 
 import matplotlib.pyplot as plt
@@ -21,11 +21,11 @@ class AnaliseDados:
 
         # configurando os rótulos e título
         plt.xlabel("Data")
-        plt.ylabel(f'{coluna_avaliar} por m²')
-        plt.title("Gráfico de Barras")
+        plt.ylabel(f'{coluna_avaliar}')
+        plt.title("Gráfico de Linhas")
 
         # rotariona os rótulos do eixo X para melhor visualização
-        plt.xticks(np.arange(0, len(self._df), step=5), rotation=50, fontsize=10)
+        plt.xticks(np.arange(0, len(self._df)), rotation=50, fontsize=10)
 
         # interatividade com o mouse no grafico
         mplcursors.cursor(hover=True)
@@ -35,22 +35,12 @@ class AnaliseDados:
 
 def main():
     # LER O ARQUIVO ANTES
-    leitor = Leitor_Excel("Preço-venda-aluguel.xlsx")
+    leitor = Leitor_Excel("Dados-IPCA.xlsx")
     df = leitor.ler_aquivo_vendas_aluguel()  # DataFrame lido
 
-    print("\nGRÁFICO DE PREÇOS DE VENDAS E ALUGUEIS POR METRO QUADRADO (R$/m²)")
-    print("POSSÍVEIS COLUNAS A SEREM AVALIADAS:")
+    print("\nGRÁFICO DA TAXA IPCA 2008 ATÉ 2025")
     opcoes_colunas = {
-        1: 'venda',
-        2: 'venda_1D',
-        3: 'venda_2D',
-        4: 'venda_3D',
-        5: 'venda_4D',
-        6: 'aluguel',
-        7: 'aluguel_1D',
-        8: 'aluguel_2D',
-        9: 'aluguel_3D',
-        10: 'aluguel_4D'
+        1: 'IPCA'
     }
 
     for k, v in opcoes_colunas.items():
