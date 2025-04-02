@@ -22,7 +22,7 @@ class AnaliseDados:
         # configurando os rótulos e título
         plt.xlabel("Data")
         plt.ylabel(f'{coluna_avaliar} por m²')
-        plt.title("Gráfico de Barras")
+        plt.title("Gráfico de Linhas")
 
         # rotariona os rótulos do eixo X para melhor visualização
         plt.xticks(np.arange(0, len(self._df), step=5), rotation=50, fontsize=10)
