@@ -1,5 +1,6 @@
 import pandas as pd
 import matplotlib.pyplot as plt
+import matplotlib.ticker as ticker
 from ler_arquivo import Leitor_Excel
 import numpy as np
 import mplcursors
@@ -23,7 +24,7 @@ class Yield:
         self._df['aluguel_anual'] = self._df[self.aluguel_coluna] * 12
 
         # calculando o Yield
-        self._df['yield'] = (self._df['aluguel_anual'] / self._df[self.venda_coluna]) * 100
+        self._df['yield'] = (self._df['aluguel_anual'] / self._df[self.venda_coluna]) / 10 # GAMBIARRA, OU SEJA, TENHO QUE AJUSTAS OS DADOS, OU MELHORAR A FORMA DE CHAMRA OS DADOS NO ARQUIVO EXCEL.
 
         # exibe os dados
         print(f"Coluna de venda escolhida: {self.venda_coluna}")
@@ -37,6 +38,7 @@ class Yield:
         plt.plot(self._df["Data"], self._df['yield'], color="green")
         plt.xlabel("Data")
         plt.ylabel("Yield (Aluguel / Venda)")
+        plt.gca().yaxis.set_major_formatter(ticker.PercentFormatter(xmax=100))
         plt.title(f"Gráfico de Yield entre {self.aluguel_coluna} e {self.venda_coluna}")
         plt.xticks(np.arange(0, len(self._df), step=5), rotation=50, fontsize=10)
 

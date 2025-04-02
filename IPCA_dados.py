@@ -3,6 +3,7 @@ TAXAS IPCA DE 2008 ATÉ 2025
 '''
 
 import matplotlib.pyplot as plt
+import matplotlib.ticker as ticker
 from ler_arquivo import Leitor_Excel
 import numpy as np
 import mplcursors
@@ -22,11 +23,9 @@ class AnaliseDados:
         # configurando os rótulos e título
         plt.xlabel("Data")
         plt.ylabel(f'{coluna_avaliar}')
+        plt.gca().yaxis.set_major_formatter(ticker.PercentFormatter(xmax=100))
         plt.title("Gráfico de Linhas")
-
-        # rotariona os rótulos do eixo X para melhor visualização
-        plt.xticks(np.arange(0, len(self._df)), rotation=50, fontsize=10)
-
+        
         # interatividade com o mouse no grafico
         mplcursors.cursor(hover=True)
 
@@ -48,12 +47,12 @@ def main():
 
     while True:
         try:
-            escolha = int(input("\nQual coluna gostaria de visualizar? (1-10): "))
+            escolha = int(input("\nQual coluna gostaria de visualizar? (1-2): "))
             if escolha in opcoes_colunas:
                 coluna_avaliar = opcoes_colunas[escolha]
                 break
             else:
-                print("Digite um número entre 1 e 10.")
+                print("Digite um número entre 1 a 2.")
         except ValueError:
             print("Por favor, insira um número válido.")
 
