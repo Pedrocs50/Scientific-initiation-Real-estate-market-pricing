@@ -5,8 +5,7 @@ Scientific initiation on real estate market pricing, aiming to analyze and predi
 Sites:
 
 Learn about:
-readcsv
-googlecolab
+
 
 ---
 
