@@ -1,6 +1,4 @@
-# Scientific-initiation-Real-estate-market-pricing
-
-# 🏘️ Projeto de Precificação Imobiliária com Machine Learning
+# Projeto de Precificação Imobiliária com Machine Learning
 
 Este projeto tem como objetivo analisar dados do mercado imobiliário e desenvolver modelos de machine learning para **prever o valor de imóveis** com base em características como localização, metragem, número de quartos, entre outras variáveis.
 
