@@ -23,8 +23,3 @@ Este projeto tem como objetivo analisar dados do mercado imobiliário e desenvol
 - ✅ Plotar dados sobre os índices da inflação de IPCA e IGP-M.
 - ✅ Calcular e plotar o yield (relação entre o valor do aluguel e o valor de venda)
 - ⏳ Pré-processamento de dados para machine learning
-
-- Legenda:
-- ✅: Done
-- 🔄: Doing
-- ⏳: To do
